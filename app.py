@@ -166,6 +166,24 @@ def variable_page():
         db.session.add(bloodData_)
         db.session.commit()
         return "DATA SUCCESSFULL UPADTED"
+    
+@app.route('/locationData', methods=['POST', 'GET'])
+def variable_page():
+    ApiCode_ = request.args.get('API', default='None', type=str)
+    BloodBankId_ = request.args.get('BloodBankId', default='None', type=str)
+    BloodType_ = request.args.get('BloodType', default='None', type=str)
+    LocationData_ = request.args.get('LocationData', default='None', type=str)
+    BloodDetail_ = request.args.get('BloodDetail', default='None', type=str)
+    apiResult = apiData.query.filter(apiData.ApiCode.like(ApiCode_)).first()
+    apiResult = True
+    if apiResult:
+        print("API AUTHENTICATION SUCCESSFULL, TIME: ", datetime.datetime.now())
+        trackData_ = trackData(BloodBankId =BloodBankId_, BloodType=BloodType_, LocationData_=LocationData,
+                               BloodDetail=BloodDetail_)
+        #print(trackData_.DeviceId)
+        db.session.add(trackData_)
+        db.session.commit()
+        return "DATA SUCCESSFULL UPADTED"
 
 
 @app.route('/logout')
